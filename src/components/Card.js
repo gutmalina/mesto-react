@@ -1,10 +1,10 @@
 import React from "react";
 
-function Card({name, link, onCardClick} ){
+function Card({name, link, likes, onCardClick} ){
 
-//Передать данные карточки в попап с увеличенной картинкой
+/** Передать данные карточки в попап с увеличенной картинкой */
   function handleClick() {
-    onCardClick([name, link]);
+    onCardClick({name, link});
   }
 
   return(
@@ -13,11 +13,11 @@ function Card({name, link, onCardClick} ){
       <div className="card__caption">
         <h2 className="card__text">{name}</h2>
         <button type="button" className="button button_type_like-card" aria-label="Поставить лайк"></button>
-        <p className="card__like-counter"></p>
+        <p className="card__like-counter">{likes.length}</p>
       </div>
       <button type="button" className="button button_type_delete-card" aria-label="Удалить фотографию"></button>
     </article>
   )
 }
 
-export default Card
+export default Card;

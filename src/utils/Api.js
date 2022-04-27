@@ -1,19 +1,15 @@
 export class Api {
   constructor({baseUrl, headers}) {
     this._headers = headers;
-    this._baseUrl =baseUrl;
+    this._baseUrl = baseUrl;
   }
 
-  //проверить ответ
+  /** проверить ответ */
   _checkResponse(res){
-    if(res.ok){
-      return res.json()
-    }else{
-      return Promise.reject(res.status)
-    }
+    return (res.ok) ? res.json() : Promise.reject(res.status)
   }
 
-//получить данные профиля с сервера
+  /** получить данные профиля с сервера */
   getProfile(){
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
@@ -21,7 +17,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-//получить предзагруженные карточки с сервера
+  /** получить предзагруженные карточки с сервера */
   getCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
@@ -29,7 +25,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-//отправить на сервер новые данные профиля
+  /** отправить на сервер новые данные профиля */
   editProfile(name, about){
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
@@ -42,7 +38,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-//добавить новую карточку на сервер
+  /** добавить новую карточку на сервер */
   addCard(name, link, likes){
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -56,7 +52,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-//удалить карточку на сервере
+  /** удалить карточку на сервере */
   deleteCard(id){
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
@@ -65,7 +61,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-  //добавить like
+  /** добавить like */
   addLike(id){
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
@@ -74,7 +70,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-  //удалить like
+  /** удалить like */
   deleteLike(id){
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
@@ -83,7 +79,7 @@ export class Api {
     .then(this._checkResponse)
   }
 
-  //отправить на сервер новые данные аватар
+  /** отправить на сервер новые данные аватар */
   editAvatar(avatar){
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
@@ -97,7 +93,7 @@ export class Api {
 
 }
 
- const api = new Api({
+const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
   headers: {
     authorization: '1644d6d3-d402-48a7-a47b-050c577645a3',
@@ -105,4 +101,4 @@ export class Api {
   }
 });
 
-export default api
+export default api;
