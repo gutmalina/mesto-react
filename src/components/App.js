@@ -12,7 +12,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState()
+  const [selectedCard, setSelectedCard] = useState(null)
 
 /** Открыть попап */
   function handleEditProfileClick(){
@@ -36,7 +36,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
-    setSelectedCard()
+    setSelectedCard(null)
   }
 
 /* Установить текущий год дя footer */
@@ -55,24 +55,36 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer date={getYear()}/>
-        <PopupWithForm name="profile" title="Редактировать профиль" contentButton="Сохранить"
+        <PopupWithForm
+          name="profile"
+          title="Редактировать профиль"
+          contentButton="Сохранить"
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}>
           <FormProfile/>
         </PopupWithForm>
-        <PopupWithForm name="mesto" title="Новое место" contentButton="Создать"
+        <PopupWithForm
+          name="mesto"
+          title="Новое место"
+          contentButton="Создать"
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}>
           <FormMesto/>
         </PopupWithForm>
-        <PopupWithForm name="avatar" title="Обновить аватар" contentButton="Сохранить"
+        <PopupWithForm
+          name="avatar"
+          title="Обновить аватар"
+          contentButton="Сохранить"
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}>
           <FormAvatar/>
         </PopupWithForm>
-        <PopupWithForm name="delete" title="Вы уверены?" contentButton="Да"/>
+        <PopupWithForm
+          name="delete"
+          title="Вы уверены?"
+          contentButton="Да"/>
         {
-          (selectedCard) &&
+          selectedCard &&
             <ImagePopup onClose={closeAllPopups} card={selectedCard}/>
         }
       </div>
