@@ -1,26 +1,9 @@
-import React, { useEffect, useState } from "react";
-import api from "../utils/Api";
+import React from "react";
 import Card from "./Card";
+import { CurrentUserContext} from '../contexts/CurrentUserContext';
 
-function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}){
-  const [userName, setUserName] = useState('')
-  const [userDescription, setUserDescription] = useState('')
-  const [userAvatar, setUserAvatar] = useState('')
-  const [cards, setCards] = useState([])
-
-/** Загрузка страницы, получение данных профиля и массив карточек */
-  useEffect(()=>{
-    Promise.all([api.getProfile(), api.getCards()])
-      .then(([res, cards]) => {
-        setUserName(res.name)
-        setUserDescription(res.about)
-        setUserAvatar(res.avatar)
-        setCards(cards)
-      })
-      .catch(err => {
-        console.log(err)
-      });
-  }, [])
+function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardDelete, onCardClick, onCardLike}){
+  const currentUser = React.useContext(CurrentUserContext);
 
   return(
     <main className="content indent__content">
@@ -29,11 +12,13 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}){
           type="button"
           className="button button_avatar button_type_avatar-profile"
           onClick={onEditAvatar}>
-          <img className="profile__avatar" src={userAvatar} alt="Фотография профиля"/>
+          <img className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Фотография профиля"/>
         </button>
         <div className="profile__info">
-          <h1 className="profile__info-title">{userName}</h1>
-          <p className="profile__info-subtitle">{userDescription}</p>
+          <h1 className="profile__info-title">{currentUser.name}</h1>
+          <p className="profile__info-subtitle">{currentUser.about}</p>
           <button
             type="button"
             className="button button_type_edit-profile"
@@ -51,7 +36,11 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}){
       <section className="group-cards indent__group-cards">
       {
         cards.map((card) => (
-          <Card {...card} key={card._id} onCardClick={onCardClick}/>
+          <Card {...card} key={card._id}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
+          />
         ))
       }
       </section>

@@ -11,11 +11,13 @@
 @import url(../src/blocks/indent/__span/indent__span.css);
 @import url(../src/blocks/button/button.css);
 @import url(../src/blocks/button/_active/button_active-like.css);
+@import url(../src/blocks/button/_inactive/button_inactive-like.css);
 @import url(../src/blocks/button/_avatar/button_avatar.css);
 @import url(../src/blocks/button/_type/button_type_edit-profile.css);
 @import url(../src/blocks/button/_type/button_type_add-profile.css);
 @import url(../src/blocks/button/_type/button_type_like-card.css);
 @import url(../src/blocks/button/_type/button_type_delete-card.css);
+@import url(../src/blocks/button/_type/button_type_delete-hidden.css);
 @import url(../src/blocks/button/_style/button_style_close.css);
 @import url(../src/blocks/button/_style/button_style_save.css);
 @import url(../src/blocks/button/_style/button_style_save-invalid.css);
