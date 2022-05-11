@@ -1,8 +1,10 @@
 import React, {useRef, useEffect} from "react";
 
 function ImagePopup({card, onClose}){
+  const {link, name} = card
   const className = `popup popup_type_image popup_theme_dark ${card ? 'popup_opened' : ''}`
   const popupRef = useRef('')
+
 
 /** Закрыть попап по оверлею */
   useEffect(()=>{
@@ -26,13 +28,17 @@ function ImagePopup({card, onClose}){
         onClick={onClose}>
       </button>
         <figure className="popup__image-container">
-          <img
-            src={card.link}
+          {
+            card &&
+            <img
+            src={link}
             className="popup__image"
-            alt={card.name}/>
+            alt={name}
+            />
+          }
           <figcaption
             className="popup__image-caption">
-            {card.name}
+            {name}
           </figcaption>
         </figure>
     </div>

@@ -23,19 +23,22 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}){
     }
   }
 
+/** Очистка полей формы перед открытием */
+  useEffect(()=>{
+    setFormValues('')
+  }, [isOpen, setFormValues])
+
 /** Проверка введенных значений согласно правилам валидации. Результаты проверки сводятся в объект, где ключ - инпут, свойство - результат валидации */
   useEffect(
   function validateInputs(){
-    if(isOpen){
-      const linkValidationResult = Object.keys(validators.link).map(errorKey=>{
-        const errorResult = validators.link[errorKey](imageRef.current.value);
-        return {[errorKey]: errorResult}
-      }).reduce((acc, el)=>({...acc, ...el}), {})
+    const linkValidationResult = Object.keys(validators.link).map(errorKey=>{
+      const errorResult = validators.link[errorKey](imageRef.current.value);
+      return {[errorKey]: errorResult}
+    }).reduce((acc, el)=>({...acc, ...el}), {})
 
-      setErrors({
-        link: linkValidationResult
-      })
-    }
+    setErrors({
+      link: linkValidationResult
+    })
   }, [isOpen, formValues, setErrors])
 
 /** Приведение результатов валидации в одно boolean значение - если хотя бы одно поле true - будет true */
@@ -78,6 +81,7 @@ const handleFormValues = useCallback((evt)=>{
       onDisabled={isSubmitDisable}>
       <FormAvatar
         imageRef={imageRef}
+        link={formValues || ''}
         onHandleFormValues={handleFormValues}
         onErrors={errors}
         onLinkInvalid={isLinkInvalid}

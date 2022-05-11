@@ -48,7 +48,7 @@ const handleFormValues = useCallback((evt)=>{
     setFormValues({
       name: currentUser.name,
       description: currentUser.about})
-  }, [currentUser]);
+  }, [isOpen, currentUser]);
 
 /** Проверка введенных значений согласно правилам валидации. Результаты проверки сводятся в объект */
   useEffect(
@@ -107,8 +107,8 @@ const handleFormValues = useCallback((evt)=>{
       onSubmit={handleSubmit}
       onDisabled={isSubmitDisable}>
       <FormProfile
-        name={name}
-        description={description}
+        name={name || ''}
+        description={description || ''}
         onHandleFormValues={handleFormValues}
         onErrors={errors}
         onNameInvalid={isNameInvalid}

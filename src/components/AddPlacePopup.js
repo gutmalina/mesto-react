@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from "react";
+import {useState, useCallback, useEffect} from "react";
 import PopupWithForm from "./PopupWithForm";
 import FormMesto from "./FormMesto";
 
@@ -41,6 +41,14 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
     setFormValues(prevState=>({...prevState, [name]: value}))
   }, [setFormValues])
 
+/** Очистка полей формы перед открытием */
+  useEffect(()=>{
+    setFormValues({
+      name: '',
+      link: ''
+    })
+  }, [isOpen, setFormValues])
+
 /** Submit, сбор и передача данных новой карточки для отправки на сервер */
   function handleSubmit(evt){
     evt.preventDefault();
@@ -57,23 +65,21 @@ function AddPlacePopup({isOpen, onClose, onAddPlace}){
 /** Проверка введенных значений согласно правилам валидации. Результаты проверки сводятся в объект, где ключ - инпут, свойство - результат валидации */
   useEffect(
     function validateInputs(){
-    if(isOpen){
 
-      const nameValidationResult = Object.keys(validators.name).map(errorKey=>{
-        const errorResult = validators.name[errorKey](name);
-        return {[errorKey]: errorResult}
-      }).reduce((acc, el)=>({...acc, ...el}), {})
+    const nameValidationResult = Object.keys(validators.name).map(errorKey=>{
+      const errorResult = validators.name[errorKey](name);
+      return {[errorKey]: errorResult}
+    }).reduce((acc, el)=>({...acc, ...el}), {})
 
-      const linkValidationResult = Object.keys(validators.link).map(errorKey=>{
-        const errorResult = validators.link[errorKey](link);
-        return {[errorKey]: errorResult}
-      }).reduce((acc, el)=>({...acc, ...el}), {})
+    const linkValidationResult = Object.keys(validators.link).map(errorKey=>{
+      const errorResult = validators.link[errorKey](link);
+      return {[errorKey]: errorResult}
+    }).reduce((acc, el)=>({...acc, ...el}), {})
 
-      setErrors({
-        name: nameValidationResult,
-        link: linkValidationResult
-      })
-    }
+    setErrors({
+      name: nameValidationResult,
+      link: linkValidationResult
+    })
   }, [isOpen, formValues, setErrors])
 
 /** Приведение результатов валидации в одно boolean значение - если хотя бы одно поле true - будет true */

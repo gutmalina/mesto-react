@@ -28,7 +28,10 @@ function Card({name, link, likes, owner, _id, onCardClick, onCardLike, onCardDel
 
   return(
     <article className="card">
-      <img className="card__img" src={link} alt={name} onClick={handleClick}/>
+      <img className="card__img"
+        src={link}
+        alt={name}
+        onClick={handleClick}/>
       <div className="card__caption">
         <h2 className="card__text">{name}</h2>
         <button
